@@ -1,0 +1,14 @@
+name: LightSet
+description: Dynamic spotlights and lighting (light blocks) - toggle, rotate, dim, effects, groups.
+version: '${version}'
+
+main: net.dvmn2.lightset.LightSet
+api-version: '1.21'
+load: POSTWORLD
+
+authors: [ DVMN2 ]
+
+permissions:
+  lightset.admin:
+    description: Доступ к /lightset (создание и управление источниками света)
+    default: op

@@ -1,0 +1,90 @@
+# Язык сообщений плагина: ru, en или auto (по локали игрока)
+language: auto
+
+# Жёсткие лимиты (защита сервера от перегрузки).
+limits:
+  # Максимальная дальность прожектора, блоков
+  max-range: 320
+  # Максимальный полный угол конуса, градусов
+  max-angle: 160
+  # Максимум лучей на один прожектор
+  max-rays: 400
+  # Максимум световых блоков на один источник
+  max-blocks-per-source: 1024
+  # Максимум световых блоков на весь сервер
+  max-total-blocks: 30000
+
+# Значения для новых прожекторов (потом меняются командами).
+defaults:
+  brightness: 15
+  # Полный угол конуса, градусов
+  angle: 40
+  range: 250
+  # Сколько лучей пускается внутри конуса. Больше лучей = ровнее пятно, но тяжелее пересчёт.
+  rays: 120
+
+# Как спадает яркость прожектора (0 — не спадает, 1 — до нуля).
+spot:
+  # на максимальной дальности
+  distance-falloff: 0.5
+  # на краю конуса
+  edge-falloff: 0.5
+
+# Расстановка света для strip и area (блоков между световыми блоками).
+shapes:
+  strip-spacing: 4
+  area-spacing: 6
+
+performance:
+  # Сколько прожекторов пересчитывается (лучи) за тик
+  source-updates-per-tick: 1
+  # Сколько световых блоков ставится/убирается за тик
+  block-updates-per-tick: 300
+
+# Эффекты (команда /lightset effect)
+effects:
+  interval-ticks: 4
+  flicker:
+    min: 0.4
+    change-chance: 0.5
+  pulse:
+    period-ticks: 60
+    min: 0.2
+  blink:
+    on-ticks: 20
+    off-ticks: 20
+
+# Видимый луч из частиц (только у spot). Виден всем игрокам рядом.
+beam:
+  enabled-by-default: true
+  interval-ticks: 5
+  # Показывать частицы только игрокам ближе этого расстояния
+  view-distance: 64.0
+  # Шаг между частицами вдоль луча, блоков
+  step: 3.0
+  color: "#FFF4C2"
+  size: 1.0
+
+# Видимая модель источника (item_display).
+model:
+  enabled: true
+  scale: 1.0
+  # Множитель дальности прорисовки (1.0 = 64 блока)
+  view-range: 2.0
+  # Поправка поворота модели (подстройка под конкретный предмет), градусов
+  yaw-offset: 0.0
+  pitch-offset: 0.0
+  # material — предмет; item-model — необязательная модель из ресурспака (namespace:key)
+  items:
+    spot:
+      material: SPYGLASS
+      item-model: ""
+    lamp:
+      material: SEA_LANTERN
+      item-model: ""
+    strip:
+      material: END_ROD
+      item-model: ""
+    area:
+      material: SHROOMLIGHT
+      item-model: ""
