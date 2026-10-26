@@ -17,6 +17,11 @@ java {
 }
 
 tasks {
+    withType<JavaCompile>().configureEach {
+        options.encoding = "UTF-8"
+        options.release = 21
+    }
+
     runServer {
         minecraftVersion("1.21.11")
         jvmArgs("-Xms2G", "-Xmx2G")

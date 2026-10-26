@@ -1,14 +1,31 @@
-name: LightSet
-description: Dynamic spotlights and lighting (light blocks) - toggle, rotate, dim, effects, groups.
+name: LightSetPlugin
+description: Dynamic spotlights and lighting built from light blocks, with effects and groups.
 version: '${version}'
 
-main: net.dvmn2.lightset.LightSet
+main: net.dvmn2.lightsetplugin.LightSetPlugin
 api-version: '1.21'
 load: POSTWORLD
 
 authors: [ DVMN2 ]
 
 permissions:
-  lightset.admin:
-    description: Доступ к /lightset (создание и управление источниками света)
+  lightset.view:
+    description: Use /lightset list, info and tp
     default: op
+  lightset.control:
+    description: Switch, dim and animate light sources (on, off, toggle, brightness, effect, group control)
+    default: op
+  lightset.edit:
+    description: Create, remove and reconfigure light sources
+    default: op
+  lightset.reload:
+    description: Use /lightset reload
+    default: op
+  lightset.admin:
+    description: All administrative LightSet permissions
+    default: op
+    children:
+      lightset.view: true
+      lightset.control: true
+      lightset.edit: true
+      lightset.reload: true

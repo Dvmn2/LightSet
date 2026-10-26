@@ -1,90 +1,123 @@
-# Язык сообщений плагина: ru, en или auto (по локали игрока)
-language: auto
+# LightSetPlugin configuration.
+# Invalid values are reported in the console and replaced with the default shown here.
 
-# Жёсткие лимиты (защита сервера от перегрузки).
+settings:
+  # Plugin message language: "ru", "en" or "auto".
+  # "auto" uses the player's client locale; the console always gets English.
+  language: auto
+
+# Hard limits that protect the server from overload.
 limits:
-  # Максимальная дальность прожектора, блоков
-  max-range: 320
-  # Максимальный полный угол конуса, градусов
-  max-angle: 160
-  # Максимум лучей на один прожектор
+  # Maximum spotlight range, in blocks (1..2048). Default: 320.
+  max-range-blocks: 320
+  # Maximum full cone angle of a spotlight, in degrees (1..179). Default: 160.
+  max-angle-degrees: 160
+  # Maximum number of rays per spotlight (1..5000). Default: 400.
   max-rays: 400
-  # Максимум световых блоков на один источник
+  # Maximum number of light blocks held by one source (1..100000). Default: 1024.
   max-blocks-per-source: 1024
-  # Максимум световых блоков на весь сервер
+  # Maximum number of light blocks on the whole server (1..10000000). Default: 30000.
   max-total-blocks: 30000
 
-# Значения для новых прожекторов (потом меняются командами).
+# Values given to newly created sources. They can be changed per source with commands.
 defaults:
+  # Brightness (0..15). Default: 15.
   brightness: 15
-  # Полный угол конуса, градусов
-  angle: 40
-  range: 250
-  # Сколько лучей пускается внутри конуса. Больше лучей = ровнее пятно, но тяжелее пересчёт.
+  # Full cone angle, in degrees (1..limits.max-angle-degrees). Default: 40.
+  angle-degrees: 40
+  # Spotlight range, in blocks (1..limits.max-range-blocks). Default: 250.
+  range-blocks: 250
+  # Rays cast inside the cone (1..limits.max-rays). More rays give a smoother spot
+  # but make recalculation heavier. Default: 120.
   rays: 120
 
-# Как спадает яркость прожектора (0 — не спадает, 1 — до нуля).
+# How spotlight brightness fades (0.0 = no fade, 1.0 = fade to zero).
 spot:
-  # на максимальной дальности
+  # Fade at the maximum range (0.0..1.0). Default: 0.5.
   distance-falloff: 0.5
-  # на краю конуса
+  # Fade at the edge of the cone (0.0..1.0). Default: 0.5.
   edge-falloff: 0.5
 
-# Расстановка света для strip и area (блоков между световыми блоками).
+# Light block placement for "strip" and "area" sources.
 shapes:
-  strip-spacing: 4
-  area-spacing: 6
+  # Distance between light blocks along a strip, in blocks (1..64). Default: 4.
+  strip-spacing-blocks: 4
+  # Distance between light blocks inside an area, in blocks (1..64). Default: 6.
+  area-spacing-blocks: 6
 
 performance:
-  # Сколько прожекторов пересчитывается (лучи) за тик
+  # How many sources may be recalculated (ray tracing) per tick (1..100). Default: 1.
   source-updates-per-tick: 1
-  # Сколько световых блоков ставится/убирается за тик
+  # How many light blocks may be placed or removed per tick (1..100000). Default: 300.
   block-updates-per-tick: 300
 
-# Эффекты (команда /lightset effect)
+# Brightness effects (command /lightset effect).
 effects:
+  # How often effects are evaluated, in ticks (1..100). Default: 4.
   interval-ticks: 4
   flicker:
+    # Lowest brightness multiplier (0.0..1.0). Default: 0.4.
     min: 0.4
+    # Chance to pick a new brightness on each evaluation (0.0..1.0). Default: 0.5.
     change-chance: 0.5
   pulse:
+    # Length of one pulse, in ticks (4..100000). Default: 60.
     period-ticks: 60
+    # Lowest brightness multiplier (0.0..1.0). Default: 0.2.
     min: 0.2
   blink:
+    # Time the light stays on, in ticks (1..100000). Default: 20.
     on-ticks: 20
+    # Time the light stays off, in ticks (1..100000). Default: 20.
     off-ticks: 20
 
-# Видимый луч из частиц (только у spot). Виден всем игрокам рядом.
+# Visible particle beam of spotlights. Seen by every player nearby.
 beam:
+  # Whether new spotlights show the beam (true/false). Default: true.
   enabled-by-default: true
+  # How often the beam is redrawn, in ticks (1..200). Default: 5.
   interval-ticks: 5
-  # Показывать частицы только игрокам ближе этого расстояния
-  view-distance: 64.0
-  # Шаг между частицами вдоль луча, блоков
-  step: 3.0
+  # Particles are shown only to players closer than this, in blocks (4.0..512.0). Default: 64.0.
+  view-distance-blocks: 64.0
+  # Distance between particles along the beam, in blocks (0.5..32.0). Default: 3.0.
+  step-blocks: 3.0
+  # Particle colour as #RRGGBB. Default: "#FFF4C2".
   color: "#FFF4C2"
+  # Particle size (0.1..4.0). Default: 1.0.
   size: 1.0
 
-# Видимая модель источника (item_display).
+# Visible model of a source (item_display entity).
 model:
+  # Whether models are spawned (true/false). Default: true.
   enabled: true
+  # Model scale (0.05..16.0). Default: 1.0.
   scale: 1.0
-  # Множитель дальности прорисовки (1.0 = 64 блока)
-  view-range: 2.0
-  # Поправка поворота модели (подстройка под конкретный предмет), градусов
-  yaw-offset: 0.0
-  pitch-offset: 0.0
-  # material — предмет; item-model — необязательная модель из ресурспака (namespace:key)
+  # View range multiplier, 1.0 = 64 blocks (0.1..16.0). Default: 2.0.
+  view-range-multiplier: 2.0
+  # Yaw correction of the model, in degrees (-360.0..360.0). Fits a specific item. Default: 0.0.
+  yaw-offset-degrees: 0.0
+  # Pitch correction of the model, in degrees (-360.0..360.0). Default: 0.0.
+  pitch-offset-degrees: 0.0
+  # Item shown for each source type. "material" is any item material name;
+  # "item-model" is an optional resource pack model as namespace:path (empty = none).
   items:
     spot:
+      # Default: SPYGLASS.
       material: SPYGLASS
+      # Default: empty (none).
       item-model: ""
     lamp:
+      # Default: SEA_LANTERN.
       material: SEA_LANTERN
+      # Default: empty (none).
       item-model: ""
     strip:
+      # Default: END_ROD.
       material: END_ROD
+      # Default: empty (none).
       item-model: ""
     area:
+      # Default: SHROOMLIGHT.
       material: SHROOMLIGHT
+      # Default: empty (none).
       item-model: ""

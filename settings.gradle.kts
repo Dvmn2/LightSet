@@ -1,1 +1,1 @@
-rootProject.name = "LightSet"
+rootProject.name = "LightSetPlugin"
